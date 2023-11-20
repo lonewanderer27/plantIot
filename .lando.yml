@@ -1,0 +1,7 @@
+name: plantiot
+recipe: laravel
+config:
+  webroot: app/public
+services:
+  phpmyadmin:
+    type: phpmyadmin
