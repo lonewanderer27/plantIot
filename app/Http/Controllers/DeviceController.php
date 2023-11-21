@@ -9,15 +9,32 @@ use App\Models\User;
 
 class DeviceController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $devices = Device::all();
         return response()->json([
-            "devices" => $devices
+            "devices" => $devices,
+            "error" => false,
+            "success" => true
         ]);
     }
 
-    public function show(Device $device) {
+    public function show(Device $device)
+    {
         $device = Device::device_user_pairing();
-        return response()->json($device);
+        if ($device) {
+            return response()->json([
+                "message" => "Device retrieved successfully",
+                "device" => $device,
+                "error" => false,
+                "success" => true
+            ]);
+        } else {
+            return response()->json([
+                "message" => "Device not found",
+                "error" => true,
+                "success" => false
+            ], 404);
+        }
     }
 }
