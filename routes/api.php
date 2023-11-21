@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DeviceUserPairingController;
 use App\Http\Controllers\ReadingController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,8 @@ Route::middleware(['api.key'])->group(function () {
     Route::get('users/id/{id}', [UserController::class, 'show']);
     Route::get('users/email/{email}/password/{password}', [UserController::class, 'showByEmailAndPassword']);
     Route::post('users', [UserController::class, 'store']);
+
+    Route::post('login', [LoginController::class,'verify']);
 
     Route::get('devices', [DeviceController::class, 'index']);
     Route::get('devices/id/{id}', [DeviceController::class, 'show']);

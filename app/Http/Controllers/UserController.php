@@ -38,6 +38,21 @@ class UserController extends Controller
 
     public function showByEmailAndPassword(Request $request)
     {
+        $validator = validator($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json([
+                "message" => "Invalid credentials",
+                "error" => true,
+                "success" => false,
+                "errors" => $errors,
+            ]);
+        }
+
         $email = $request->email;
         $password = $request->password;
         $user = User::where('email', $email)->where('password', $password)->first();
