@@ -16,6 +16,16 @@ class UserController extends Controller
 
     public function show(User $user) {
         $user = User::device_user_pairing();
-        return response()->json($user);
+        return response()->json([
+            "user" => $user,
+        ]);
+    }
+
+    public function store(Request $request) {
+        $user = User::create($request->all());
+        return response()->json([
+            "message" => "User created successfully",
+            "user" => $user
+        ]);
     }
 }

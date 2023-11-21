@@ -24,6 +24,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('users', [UserController::class, 'index']);
 Route::get('users/{id}', [UserController::class, 'show']);
+Route::post('users', [UserController::class, 'store']);
+
 Route::get('devices', [DeviceController::class, 'index']);
 Route::get('devices/{id}', [DeviceController::class, 'show']);
+Route::post('devices', [DeviceController::class, 'store']);
+
 Route::get('pairings', [DeviceUserPairingController::class, 'index']);
+Route::get('pairings/id/{id}', [DeviceUserPairingController::class, 'show']);
+Route::get('pairings/user/{user_id}', [DeviceUserPairingController::class, 'showByUser']);
+Route::get('pairings/device/{device_id}', [DeviceUserPairingController::class, 'showByDevice']);
+
+Route::post('pairings', [DeviceUserPairingController::class, 'store']);
