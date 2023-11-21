@@ -10,36 +10,87 @@ class DeviceUserPairingController extends Controller
     public function index() {
         $pairings = DeviceUserPairing::all();
         return response()->json([
-            "pairings" => $pairings
+            "pairings" => $pairings,
+            "error" => false,
+            "success" => true
         ]);
     }
 
     public function show($id) {
         $pairing = DeviceUserPairing::find($id);
-        return response()->json([
-            "pairing" => $pairing
-        ]);
+        if ($pairing) {
+            return response()->json([
+                "message" => "Pairing retrieved successfully",
+                "pairing" => $pairing,
+                "error" => false,
+                "success" => true
+            ]);
+        } else {
+            return response()->json([
+                "message" => "Pairing not found",
+                "error" => true,
+                "success" => false
+            ], 404);
+        }
     }
 
     public function showByUser($user_id) {
         $pairings = DeviceUserPairing::where('user_id', $user_id)->get();
-        return response()->json([
-            "pairings" => $pairings
-        ]);
+        if ($pairings) {
+            return response()->json([
+                "message" => "Pairings retrieved successfully",
+                "pairings" => $pairings,
+                "error" => false,
+                "success" => true
+            ]);
+        } else {
+            return response()->json([
+                "message" => "Pairings not found",
+                "error" => true,
+                "success" => false
+            ], 404);
+        }
     }
 
     public function showByDevice($device_id) {
         $pairings = DeviceUserPairing::where('device_id', $device_id)->get();
-        return response()->json([
-            "pairings" => $pairings
-        ]);
+        if ($pairings) {
+            return response()->json([
+                "message" => "Pairings retrieved successfully",
+                "pairings" => $pairings,
+                "error" => false,
+                "success" => true
+            ]);
+        } else {
+            return response()->json([
+                "message" => "Pairings not found",
+                "error" => true,
+                "success" => false
+            ], 404);
+        }
     }
 
     public function store(Request $request) {
         $pairing = DeviceUserPairing::create($request->all());
-        return response()->json([
-            "message" => "Pairing created successfully",
-            "pairing" => $pairing
+
+        $validator = validator($request->all(), [
+            'user_id' => 'required|integer',
+            'device_id' => 'required|integer',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "message" => "Invalid data",
+                "error" => true,
+                "success" => false
+            ], 400);
+        } else {
+            return response()->json([
+                "message" => "Pairing created successfully",
+                "pairing" => $pairing,
+                "error" => false,
+                "success" => true
+            ], 201);
+        }
     }
 }
