@@ -19,9 +19,20 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user = User::device_user_pairing();
-        return response()->json([
-            "user" => $user,
-        ]);
+        if ($user) {
+            return response()->json([
+                "message" => "User retrieved successfully",
+                "user" => $user,
+                "error" => false,
+                "success" => true
+            ]);
+        } else {
+            return response()->json([
+                "message" => "User not found",
+                "error" => true,
+                "success" => false
+            ], 404);
+        }
     }
 
     public function showByEmailAndPassword(Request $request)
@@ -34,12 +45,14 @@ class UserController extends Controller
                 "message" => "User retrieved successfully",
                 "user" => $user,
                 "error" => false,
+                "success" => true
             ]);
         } else {
             return response()->json([
                 "message" => "Invalid credentials",
                 "error" => true,
-            ]);
+                "success" => false
+            ], 404);
         }
     }
 
@@ -65,6 +78,7 @@ class UserController extends Controller
             return response()->json([
                 "message" => "Validation failed",
                 "error" => true,
+                "success" => false,
                 "errors" => $validator->errors()
             ], 422);
         }
@@ -77,6 +91,6 @@ class UserController extends Controller
             "message" => "User created successfully",
             "error" => false,
             "user" => $user
-        ]);
+        ], 201);
     }
 }
