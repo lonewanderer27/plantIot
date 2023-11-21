@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\DeviceUserPairing::factory(10)->create();
+        \App\Models\Reading::factory(100)->create();
     }
 }
