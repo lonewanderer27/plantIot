@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DeviceUserPairingController;
+use App\Http\Controllers\LoginController;
 use App\Models\DeviceUserPairing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('users', [UserController::class, 'index']);
 Route::get('users/{id}', [UserController::class, 'show']);
+Route::get('users/email/{email}/password/{password}', [UserController::class, 'showByEmailAndPassword']);
 Route::post('users', [UserController::class, 'store']);
+
+Route::post('login', [LoginController::class, 'showByEmailAndPassword']);
 
 Route::get('devices', [DeviceController::class, 'index']);
 Route::get('devices/{id}', [DeviceController::class, 'show']);
