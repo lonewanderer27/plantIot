@@ -86,7 +86,7 @@ class UserController extends Controller
                 'required',
                 'string',
                 'min:8',
-                'regex:/^(?=.*[A-Za-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/',
+                'regex:/[!@#$%^&*(),.?":{}|<>]/',
             ],
         ]);
 
