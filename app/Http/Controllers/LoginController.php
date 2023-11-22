@@ -26,7 +26,7 @@ class LoginController extends Controller
         }
 
         $email = $request->email;
-        $password = $request->password;        
+        $password = hash('sha256', $request->password);
 
         $user = User::where('email', $email)->where('password', $password)->first();
         if ($user) {
@@ -34,11 +34,13 @@ class LoginController extends Controller
                 "message" => "User retrieved successfully",
                 "user" => $user,
                 "error" => false,
+                "success" => true
             ]);
         } else {
             return response()->json([
                 "message" => "Invalid credentials",
                 "error" => true,
+                "success" => false,
             ]);
         }
     }
