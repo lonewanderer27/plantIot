@@ -70,6 +70,24 @@ class DeviceUserPairingController extends Controller
         }
     }
 
+    public function showByUserAndDevice($user_id, $device_id) {
+        $pairing = DeviceUserPairing::where('user_id', $user_id)->where('device_id', $device_id)->first();
+        if ($pairing) {
+            return response()->json([
+                "message" => "Pairing retrieved successfully",
+                "pairing" => $pairing,
+                "error" => false,
+                "success" => true
+            ]);
+        } else {
+            return response()->json([
+                "message" => "Pairing not found",
+                "error" => true,
+                "success" => false
+            ], 404);
+        }
+    }
+
     public function store(Request $request) {
         $pairing = DeviceUserPairing::create($request->all());
 
