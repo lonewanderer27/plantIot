@@ -44,5 +44,6 @@ Route::middleware(['api.key'])->group(function () {
     Route::get('readings', [ReadingController::class, 'index']);
     Route::get('readings/id/{id}', [ReadingController::class, 'show']);
     Route::get('readings/device_id/{device_id}', [ReadingController::class, 'showByDevice']);
+    Route::get('readings/user/{user_id}/device/{device_id}/latest', [ReadingController::class, 'showLatestByUserAndDevice']);
     Route::post('readings', [ReadingController::class, 'store']);
 });
