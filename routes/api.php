@@ -39,6 +39,7 @@ Route::middleware(['api.key'])->group(function () {
     Route::get('pairings/id/{id}', [DeviceUserPairingController::class, 'show']);
     Route::get('pairings/user/{user_id}', [DeviceUserPairingController::class, 'showByUser']);
     Route::get('pairings/device/{device_id}', [DeviceUserPairingController::class, 'showByDevice']);
+    Route::get('pairings/user/{user_id}/device/{device_id}', [DeviceUserPairingController::class, 'showByUserAndDevice']);
 
     Route::get('readings', [ReadingController::class, 'index']);
     Route::get('readings/id/{id}', [ReadingController::class, 'show']);
