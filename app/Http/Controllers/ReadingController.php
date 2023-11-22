@@ -52,24 +52,6 @@ class ReadingController extends Controller
         }
     }
 
-    public function showLatestByUserAndDevice($user_id, $device_id) {
-        $reading = Reading::where('device_id', $device_id)->orderBy('created_at', 'desc')->first();
-        if ($reading) {
-            return response()->json([
-                "message" => "Reading retrieved successfully",
-                "reading" => $reading,
-                "error" => false,
-                "success" => true
-            ]);
-        } else {
-            return response()->json([
-                "message" => "Reading not found",
-                "error" => true,
-                "success" => false
-            ], 404);
-        }
-    }
-
     public function store(Request $request) {
         $validator = validator($request->all(), [
             'device_id' => 'required|integer',
