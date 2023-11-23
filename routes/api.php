@@ -28,6 +28,7 @@ Route::middleware(['api.key'])->group(function () {
     Route::get('users/id/{id}', [UserController::class, 'show']);
     Route::get('users/email/{email}/password/{password}', [UserController::class, 'showByEmailAndPassword']);
     Route::post('users', [UserController::class, 'store']);
+    Route::post('users/update/id/{id}', [UserController::class, 'updateById']);
 
     Route::post('login', [LoginController::class,'verify']);
 

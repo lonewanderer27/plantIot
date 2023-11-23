@@ -36,6 +36,54 @@ class UserController extends Controller
         }
     }
 
+    public function updateById(Request $request, $id)
+    {
+        $validator = validator($request->all(), [
+            'first_name' => 'nullable|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'contact_no' => 'nullable|string|max:15',
+            'age' => 'nullable|integer|min:1',
+            'email' => 'nullable|email|unique:users,email',
+            'password' => [
+                'nullable',
+                'string',
+                'min:8',
+                'regex:/[!@#$%^&*(),.?":{}|<>]/',
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "message" => "Validation failed",
+                "error" => true,
+                "success" => false,
+                "errors" => $validator->errors()
+            ], 422);
+        }
+
+        $user = User::find($id);
+        if ($user) {
+            $data = $request->all();
+            if (isset($data['password'])) {
+                $data['password'] = hash('sha256', $data['password']);
+            }
+            $user->update($data);
+            return response()->json([
+                "message" => "User updated successfully",
+                "error" => false,
+                "user" => $user
+            ]);
+        } else {
+            return response()->json([
+                "message" => "User not found",
+                "error" => true,
+                "success" => false
+            ], 404);
+        }
+    }
+
     public function showByEmailAndPassword(Request $request)
     {
         $validator = validator($request->all(), [
