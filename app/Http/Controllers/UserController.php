@@ -39,15 +39,14 @@ class UserController extends Controller
     public function updateById(Request $request, $id)
     {
         $validator = validator($request->all(), [
-            'first_name' => 'nullable|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'last_name' => 'nullable|string|max:255',
-            'address' => 'nullable|string|max:255',
-            'contact_no' => 'nullable|string|max:15',
-            'age' => 'nullable|integer|min:1',
-            'email' => 'nullable|email|unique:users,email',
+            'first_name' => 'string|max:255',
+            'middle_name' => 'string|max:255',
+            'last_name' => 'string|max:255',
+            'address' => 'string|max:255',
+            'contact_no' => 'string|max:15',
+            'age' => 'integer|min:1',
+            'email' => 'email',
             'password' => [
-                'nullable',
                 'string',
                 'min:8',
                 'regex:/[!@#$%^&*(),.?":{}|<>]/',
